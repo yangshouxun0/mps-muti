@@ -1,0 +1,4 @@
+interface:
+  display_name: "MPS-Muti"
+  short_description: "对标视频关键帧确认与真人服装融合正面背面4K参考图生成流程"
+  default_prompt: "使用 $mps-muti，先展示关键帧并确认镜头，再生成正面4K换装参考图；提供背面商品图时同时生成背面4K图。"
