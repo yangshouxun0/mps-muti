@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "openai-image": {
+      "command": "python",
+      "args": ["./scripts/server.py"],
+      "cwd": "."
+    }
+  }
+}

@@ -7,7 +7,19 @@ description: Generate source-video-faithful, photorealistic women's fashion try-
 
 Create a single-model fashion reference image from evidence. Treat the benchmark video as the authority for the selected shot's scene, camera, perspective, crop, subject placement, pose, props, and lighting. Treat the model image as identity authority. Treat product images as garment authority.
 
-Do not invoke any skill, including `video-replication` or `imagegen`. Use only `ffmpeg`/`ffprobe`, `view_image`, local file operations, and `mcp__openai_image__edit_images`. Do not install tools or substitute another image generator if the MCP is unavailable.
+Do not invoke any skill, including `video-replication` or `imagegen`. Use only `ffmpeg`/`ffprobe`, `view_image`, local file operations, the bundled MCP setup script, and `mcp__openai_image__edit_images`. Do not substitute another image generator if the MCP is unavailable.
+
+## Environment Preflight
+
+Before Phase 1, check whether `mcp__openai_image__edit_images` is available. If it is unavailable, run the bundled setup script from this skill directory:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\setup_mcp.ps1
+```
+
+The script installs the bundled `openai-image` MCP into a user-local Python runtime, creates a user-local `.env` from `mcp/openai-image-mcp/.env.example`, and registers the server in the user's Codex config using paths resolved from the installed skill directory. It never writes credentials into this repository. Tell the user to fill `OPENAI_API_KEY`, `OPENAI_BASE_URL`, and `OPENAI_IMAGE_MODEL` in the printed environment-file path, restart Codex, and rerun the request. Stop before final image generation until the MCP tool is available after restart.
+
+If the MCP tool is already available, do not reinstall it. If an image request returns a channel or authentication error, report the exact service error and do not switch to another image generator.
 
 ## Inputs And Authority
 
